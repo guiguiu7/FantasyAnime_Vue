@@ -1,5 +1,5 @@
 <script lang="ts">
-import logo from "@/assets/images/logo.png";
+import logo from "../../../public/dest.jpg";
 import { EMitt, ESidebarLayoutEnum, EThemeSetting } from "@/constants/enum";
 import emits from "@/utils/emits";
 import { getThemeConfigCacheByKey } from "@/utils/theme";
@@ -37,7 +37,7 @@ export default defineComponent({
 <template>
   <div class="rr-header-ctx">
     <div class="rr-header-ctx-logo hidden-xs-only">
-      <logo :logoUrl="logo" logoName="人人权限系统"></logo>
+      <logo :logoUrl="logo" logoName="后台管理系统"></logo>
     </div>
     <div class="rr-header-right">
       <div class="rr-header-right-left">

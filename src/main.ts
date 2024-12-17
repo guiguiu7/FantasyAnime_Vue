@@ -14,6 +14,7 @@ import router from "./router";
 import * as ElementPlusIcons from "@element-plus/icons-vue";
 
 import axios from "axios";
+import './network/axios_config'
 import "virtual:svg-icons-register";
 
 const app = createApp(App);
