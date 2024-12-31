@@ -1,18 +1,24 @@
 <template>
   <el-dialog v-model="visible" :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="dataForm" :rules="rules" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
-          <el-form-item label="动漫id" prop="animeId">
-        <el-input v-model="dataForm.animeId" placeholder="动漫id" :disabled="dataForm.animeId !== null"></el-input>
+          <el-form-item label="商品id" prop="goodId">
+        <el-input v-model="dataForm.goodId" placeholder="商品id"></el-input>
       </el-form-item>
-          <el-form-item label="集数" prop="num">
-        <el-input v-model="dataForm.num" placeholder="集数"></el-input>
+          <el-form-item label="用户id" prop="userId">
+        <el-input v-model="dataForm.userId" placeholder="用户id"></el-input>
       </el-form-item>
-          <el-form-item label="标题名" prop="title">
-        <el-input v-model="dataForm.title" placeholder="标题名"></el-input>
+          <el-form-item label="商品名称" prop="goodName">
+        <el-input v-model="dataForm.goodName" placeholder="商品名称"></el-input>
       </el-form-item>
-          <el-form-item label="描述" prop="description">
-        <el-input v-model="dataForm.description" placeholder="描述"></el-input>
+          <el-form-item label="购买数量" prop="num">
+        <el-input v-model="dataForm.num" placeholder="购买数量"></el-input>
       </el-form-item>
+          <el-form-item label="购买日期" prop="buyTime">
+        <el-input v-model="dataForm.buyTime" placeholder="购买日期"></el-input>
+      </el-form-item>
+<!--          <el-form-item label="是否删除" prop="isDelete">-->
+<!--        <el-input v-model="dataForm.isDelete" placeholder="是否删除"></el-input>-->
+<!--      </el-form-item>-->
       </el-form>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
@@ -31,38 +37,37 @@ const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '',  animeId: '',  num: '',  title: '',  description: ''});
+  id: '',  goodId: '',  userId: '',  goodName: '',  num: '',  buyTime: '',  isDelete: ''});
 
 const rules = ref({
-          animeId: [
+          goodId: [
+      { required: true, message: '必填项不能为空', trigger: 'blur' }
+    ],
+          userId: [
+      { required: true, message: '必填项不能为空', trigger: 'blur' }
+    ],
+          goodName: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
           num: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          title: [
+          buyTime: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          description: [
+          isDelete: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ]
   });
 
-const props = defineProps({anime:String})
-
 const init = (id?: number) => {
   visible.value = true;
   dataForm.id = "";
-  // 填入动漫id
-  dataForm.animeId = "";
-
 
   // 重置表单数据
   if (dataFormRef.value) {
     dataFormRef.value.resetFields();
   }
-
-  dataForm.animeId = <string>props.anime
 
   if (id) {
     getInfo(id);
@@ -71,7 +76,7 @@ const init = (id?: number) => {
 
 // 获取信息
 const getInfo = (id: number) => {
-  baseService.get("/anime/animeepisode/" + id).then((res) => {
+  baseService.get("/anime/goodsuserrelation/" + id).then((res) => {
     Object.assign(dataForm, res.data);
   });
 };
@@ -82,7 +87,7 @@ const dataFormSubmitHandle = () => {
     if (!valid) {
       return false;
     }
-    (!dataForm.id ? baseService.post : baseService.put)("/anime/animeepisode", dataForm).then((res) => {
+    (!dataForm.id ? baseService.post : baseService.put)("/anime/goodsuserrelation", dataForm).then((res) => {
       ElMessage.success({
         message: '成功',
         duration: 500,

@@ -16,30 +16,30 @@
           <el-form-item label="地址" prop="location">
         <el-input v-model="dataForm.location" placeholder="地址"></el-input>
       </el-form-item>
-          <el-form-item label="注册日期" prop="joined">
-        <el-input v-model="dataForm.joined" placeholder="注册日期"></el-input>
-      </el-form-item>
-          <el-form-item label="观看天数" prop="daysWatched">
-        <el-input v-model="dataForm.daysWatched" placeholder="观看天数"></el-input>
-      </el-form-item>
-          <el-form-item label="平均得分" prop="meanScore">
-        <el-input v-model="dataForm.meanScore" placeholder="平均得分"></el-input>
-      </el-form-item>
-          <el-form-item label="追番数" prop="watching">
-        <el-input v-model="dataForm.watching" placeholder="追番数"></el-input>
-      </el-form-item>
-          <el-form-item label="看番数" prop="completed">
-        <el-input v-model="dataForm.completed" placeholder="看番数"></el-input>
-      </el-form-item>
-          <el-form-item label="暂时停止看番数" prop="onHold">
-        <el-input v-model="dataForm.onHold" placeholder="暂时停止看番数"></el-input>
-      </el-form-item>
-          <el-form-item label="弃番数" prop="dropped">
-        <el-input v-model="dataForm.dropped" placeholder="弃番数"></el-input>
-      </el-form-item>
-          <el-form-item label="最近登录日期" prop="lastLogin">
-        <el-input v-model="dataForm.lastLogin" placeholder="最近登录日期"></el-input>
-      </el-form-item>
+<!--          <el-form-item label="注册日期" prop="joined">-->
+<!--        <el-input v-model="dataForm.joined" placeholder="注册日期"></el-input>-->
+<!--      </el-form-item>-->
+<!--          <el-form-item label="观看天数" prop="daysWatched">-->
+<!--        <el-input v-model="dataForm.daysWatched" placeholder="观看天数"></el-input>-->
+<!--      </el-form-item>-->
+<!--          <el-form-item label="平均得分" prop="meanScore">-->
+<!--        <el-input v-model="dataForm.meanScore" placeholder="平均得分"></el-input>-->
+<!--      </el-form-item>-->
+<!--          <el-form-item label="追番数" prop="watching">-->
+<!--        <el-input v-model="dataForm.watching" placeholder="追番数"></el-input>-->
+<!--      </el-form-item>-->
+<!--          <el-form-item label="看番数" prop="completed">-->
+<!--        <el-input v-model="dataForm.completed" placeholder="看番数"></el-input>-->
+<!--      </el-form-item>-->
+<!--          <el-form-item label="暂时停止看番数" prop="onHold">-->
+<!--        <el-input v-model="dataForm.onHold" placeholder="暂时停止看番数"></el-input>-->
+<!--      </el-form-item>-->
+<!--          <el-form-item label="弃番数" prop="dropped">-->
+<!--        <el-input v-model="dataForm.dropped" placeholder="弃番数"></el-input>-->
+<!--      </el-form-item>-->
+<!--          <el-form-item label="最近登录日期" prop="lastLogin">-->
+<!--        <el-input v-model="dataForm.lastLogin" placeholder="最近登录日期"></el-input>-->
+<!--      </el-form-item>-->
       </el-form>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
@@ -68,13 +68,13 @@ const rules = ref({
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
           gender: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
+      { required: false, message: '', trigger: 'blur' }
     ],
           birthday: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
+      { required: false, message: '必填项不能为空', trigger: 'blur' }
     ],
           location: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
+      { required: false, message: '必填项不能为空', trigger: 'blur' }
     ],
           joined: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }

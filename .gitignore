@@ -21,3 +21,4 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+/vite.config.ts.timestamp-1732503623420-bd168638bae2d.mjs

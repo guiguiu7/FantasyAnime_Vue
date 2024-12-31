@@ -28,6 +28,9 @@
       <el-form-item label="角色图片url" prop="imageUrl">
         <el-input v-model="dataForm.imageUrl" placeholder="角色图片url"></el-input>
       </el-form-item>
+      <el-form-item label="配音演员名" prop="cvName">
+        <el-input v-model="dataForm.imageUrl" placeholder="配音演员名"></el-input>
+      </el-form-item>
     </el-form>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
@@ -66,10 +69,13 @@ const rules = ref({
     {required: true, message: '必填项不能为空', trigger: 'blur'}
   ],
   description: [
-    {required: true, message: '必填项不能为空', trigger: 'blur'}
+    {required: false, message: '', trigger: 'blur'}
   ],
   imageUrl: [
     {required: true, message: '必填项不能为空', trigger: 'blur'}
+  ],
+  cvName: [
+    {required: false, message: '', trigger: 'blur'}
   ]
 });
 

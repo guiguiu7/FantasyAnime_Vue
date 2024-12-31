@@ -1,5 +1,5 @@
 <script lang="ts">
-import logo from "../../../public/dest.jpg";
+import logo from "/public/dest.jpg";
 import { EMitt, ESidebarLayoutEnum, EThemeSetting } from "@/constants/enum";
 import emits from "@/utils/emits";
 import { getThemeConfigCacheByKey } from "@/utils/theme";

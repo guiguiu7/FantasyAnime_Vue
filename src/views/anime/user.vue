@@ -11,13 +11,22 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border
-              @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
+              @selection-change="state.dataListSelectionChangeHandle" style="width: 100%"
+    >
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
       <el-table-column prop="id" label="id" header-align="center" align="center"></el-table-column>
       <el-table-column prop="name" label="用户名" header-align="center" align="center"
                        min-width="120px"></el-table-column>
       <!--      <el-table-column prop="password" label="密码" header-align="center" align="center"></el-table-column>-->
-      <el-table-column prop="gender" label="性别" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="gender" label="性别" header-align="center" align="center">
+        <template #default="scope">
+          <template v-if="scope.row.gender === null">
+            <el-tag type="info">
+              未知
+            </el-tag>
+          </template>
+        </template>
+      </el-table-column>
       <el-table-column prop="birthday" label="出生日期" header-align="center" align="center" min-width="140px">
         <template #default="scope">
           <template v-if="!!scope.row.birthday">
@@ -37,8 +46,15 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column prop="location" label="地址" header-align="center" align="center"
-                       min-width="140px"></el-table-column>
+      <el-table-column prop="location" label="地址" header-align="center" align="center" min-width="140px">
+        <template #default="scope">
+          <template v-if="scope.row.location === null">
+            <el-tag type="info">
+              未知
+            </el-tag>
+          </template>
+        </template>
+      </el-table-column>
       <el-table-column prop="joined" label="注册日期" header-align="center" align="center" min-width="140px">
         <template #default="scope">
           <template v-if="!!scope.row.joined">
@@ -110,7 +126,7 @@ import AddOrUpdate from "./module/user-add-or-update.vue";
 
 const view = reactive({
   deleteIsBatch: true,
-  getDataListURL: "/anime/user/page",
+  getDataListURL: "/anime/user/getUserInfo",
   getDataListIsPage: true,
   exportURL: "/anime/user/export",
   deleteURL: "/anime/user"
@@ -126,7 +142,7 @@ const addOrUpdateHandle = (id?: number) => {
 const cellStyle= ({ row, column, rowIndex, columnIndex }:any)=> {
   if (column.property == "birthday" || column.property == "joined" || column.property == "lastLogin") {
     if (row[column.property] == null) {
-      return "--"
+      return {'content': '--'}
     }
   }
 }
@@ -145,5 +161,10 @@ const cellStyle= ({ row, column, rowIndex, columnIndex }:any)=> {
   background-color: transparent !important;
 }
 
+/* el-table列数据为空自动显示-- */
+.cell:empty::before{
+  content:'--';
+  color:gray;
+}
 
 </style>

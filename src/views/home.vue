@@ -7,7 +7,7 @@
       </ul>
       <div style="height:150px; width: 150px;text-align: center;margin: auto">
         <h1 style="text-align: center">欢迎来到后台管理系统</h1>
-        <el-image fit="contain" src="../../public/dest.jpg"/>
+        <el-image fit="contain" src="/dest.jpg"/>
       </div>
 <!--      <ul>-->
 <!--        <li>renren-security是一个轻量级的，前后端分离的Java快速开发平台，能快速开发项目并交付【接私活利器】</li>-->
