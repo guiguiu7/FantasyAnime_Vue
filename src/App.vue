@@ -12,6 +12,7 @@ import app from "./constants/app";
 import { EPageLayoutEnum, EThemeColor, EThemeSetting } from "./constants/enum";
 import { IObject } from "./types/interface";
 import { getThemeConfigCache, setThemeColor, updateTheme } from "./utils/theme";
+import "/src/style/style.css"
 
 export default defineComponent({
   name: "App",

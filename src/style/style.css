@@ -1,0 +1,12 @@
+
+.el-popper {
+    max-width: 200px !important;
+}
+.tooltip-width {
+    max-width: 200px;
+}
+.text-over {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

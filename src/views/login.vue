@@ -110,7 +110,8 @@ const onLogin = () => {
 .rr-login {
   width: 100vw;
   height: 100vh;
-  background: #019ec4;
+  background-image: url("public/img.png");
+  background-size: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -139,15 +140,15 @@ const onLogin = () => {
   &-left {
     justify-content: center;
     flex-direction: column;
-    background-color: @--color-primary;
+    background-color: rgba(10, 255, 226,0.7);
     color: #fff;
     float: left;
     width: 50%;
 
     &-title {
       text-align: center;
-      color: #fff;
-      font-weight: 300;
+      color: #ffffff;
+      font-weight: 500;
       letter-spacing: 2px;
       font-size: 32px;
     }
@@ -156,7 +157,7 @@ const onLogin = () => {
   &-right {
     border-left: none;
     color: #fff;
-    background-color: #fff;
+    background-color: rgba(255,255,255,0.9);
     width: 50%;
     float: left;
 

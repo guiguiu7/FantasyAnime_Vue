@@ -17,8 +17,10 @@
         </el-button>
       </el-form-item>
     </el-form>
+    <div style="display: flex; height: calc(100vh - 260px)">
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border
-              @selection-change="state.dataListSelectionChangeHandle" @sort-change="state.dataListSortChangeHandle" style="width: 100%">
+              @selection-change="state.dataListSelectionChangeHandle" @sort-change="state.dataListSortChangeHandle" style="width: 100%;height: 100%"
+    >
       <template #empty>暂无数据</template>
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
       <el-table-column prop="id" label="id" header-align="center" align="center" ></el-table-column>
@@ -30,15 +32,29 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="synopsis" label="动漫简介" header-align="center" align="center"
-                       show-overflow-tooltip min-width="200px"></el-table-column>
+      <el-table-column prop="synopsis" label="动漫简介" header-align="center" align="center" min-width="200px">
+        <template #default="scope">
+          <el-popover
+              width="500"
+              trigger="hover"
+              effect="dark"
+              placement="bottom"
+              :open-delay="500"
+              :content="scope.row.synopsis"
+          >
+            <template #reference>
+              <div class="text-over">{{ scope.row.synopsis }}</div>
+            </template>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column prop="type" label="动漫类型" header-align="center" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="imageUrl" label="动漫封面图片" header-align="center" align="center" min-width="120px">
         <template #default="scope">
           <el-image preview-teleported :src="scope.row.imageUrl" :preview-src-list="[scope.row.imageUrl]"></el-image>
         </template>
       </el-table-column>
-      <el-table-column prop="aired" label="动漫发布日期(范围)" header-align="center" align="center" min-width="200px"></el-table-column>
+      <el-table-column prop="aired" label="动漫在映日期" header-align="center" align="center" min-width="200px"></el-table-column>
       <el-table-column prop="episodes" label="动漫集数" header-align="center" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="score" label="动漫评分" header-align="center" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="producers" label="制作公司" header-align="center" align="center" min-width="150px"></el-table-column>
@@ -66,6 +82,7 @@
         </template>
       </el-table-column>
     </el-table>
+    </div>
     <el-pagination :current-page="state.page" :page-sizes="[10, 20, 50, 100]" :page-size="state.limit"
                    :total="state.total" layout="total, sizes, prev, pager, next, jumper"
                    @size-change="state.pageSizeChangeHandle"

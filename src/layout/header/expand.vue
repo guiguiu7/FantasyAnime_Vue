@@ -20,7 +20,8 @@ export default defineComponent({
   name: "Expand",
   components: { SvgIcon },
   props: {
-    userName: String
+    userName: String,
+    headUrl: String
   },
   setup(props: IExpand) {
     const router = useRouter();
@@ -75,7 +76,7 @@ export default defineComponent({
       </span>
     </div>
     <div style="display: flex; justify-content: center; align-items: center">
-      <img :src="userLogo" :alt="props.userName" style="width: 30px; height: 30px; border-radius: 50%; margin-top: 3px; margin-right: 5px" />
+      <img :src="(props.headUrl === null || props.headUrl === '') ? userLogo : props.headUrl" :alt="props.userName" style="width: 30px; height: 30px; border-radius: 50%; margin-top: 3px; margin-right: 5px" />
       <el-dropdown @command="onClickUserMenus">
         <template #dropdown>
           <el-dropdown-menu>

@@ -19,17 +19,17 @@
             type="date"
             placeholder="Pick a day"
             :size="'default'"
-            value-format="YYYY-MM-DD"
+            value-format="MM-DD"
         />
-      </el-form-item>
-      <el-form-item label="角色描述" prop="description">
-        <el-input v-model="dataForm.description" placeholder="角色描述"></el-input>
       </el-form-item>
       <el-form-item label="角色图片url" prop="imageUrl">
         <el-input v-model="dataForm.imageUrl" placeholder="角色图片url"></el-input>
       </el-form-item>
       <el-form-item label="配音演员名" prop="cvName">
-        <el-input v-model="dataForm.imageUrl" placeholder="配音演员名"></el-input>
+        <el-input v-model="dataForm.cvName" placeholder="配音演员名"></el-input>
+      </el-form-item>
+      <el-form-item label="角色描述" prop="description">
+        <el-input v-model="dataForm.description" placeholder="角色描述" type="textarea" :autosize="{minRows: 3, maxRows:6}"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -50,7 +50,7 @@ const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '', animeId: '', name: '', age: '', birthday: '', description: '', imageUrl: ''
+  id: '', animeId: '', name: '', age: '', birthday: '', description: '', imageUrl: '', cvName: ''
 });
 
 const props = defineProps({anime:String})
@@ -63,10 +63,10 @@ const rules = ref({
     {required: true, message: '必填项不能为空', trigger: 'blur'}
   ],
   age: [
-    {required: true, message: '必填项不能为空', trigger: 'blur'}
+    {required: false, message: '必填项不能为空', trigger: 'blur'}
   ],
   birthday: [
-    {required: true, message: '必填项不能为空', trigger: 'blur'}
+    {required: false, message: '必填项不能为空', trigger: 'blur'}
   ],
   description: [
     {required: false, message: '', trigger: 'blur'}

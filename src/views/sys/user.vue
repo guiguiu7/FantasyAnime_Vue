@@ -26,6 +26,11 @@
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" @sort-change="state.dataListSortChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
       <el-table-column prop="username" label="用户名" sortable="custom" header-align="center" align="center"></el-table-column>
+      <el-table-column prop="headUrl" label="头像" header-align="center" align="center">
+        <template #default="scope">
+          <el-image :src="scope.row.headUrl"/>
+        </template>
+      </el-table-column>
       <el-table-column prop="deptName" label="所属部门" header-align="center" align="center"></el-table-column>
       <el-table-column prop="email" label="邮箱" header-align="center" align="center"></el-table-column>
       <el-table-column prop="mobile" label="手机号" sortable="custom" header-align="center" align="center"></el-table-column>

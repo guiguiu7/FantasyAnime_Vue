@@ -31,16 +31,16 @@
                   style="width: 240px; margin: 2px 2px 0 2px"
                   placeholder="Please enter keyword"
                   @input="onQueryChanged"/>
-          <el-tree-v2
-              ref="treeRef"
-              style="max-width: 240px; max-height: 100vh;"
-              icon=""
-              :data="animeInfo.list"
-              :props="{value:'id',label:'name'}"
-              :highlight-current="true"
-              :height="defaultHeight"
-              @node-click="clickNode"
-          />
+        <el-tree-v2
+            ref="treeRef"
+            style="max-width: 240px; max-height: 100vh; margin-top: 3px"
+            icon=""
+            :data="animeInfo.list"
+            :props="{value:'id',label:'name'}"
+            :highlight-current="true"
+            :height="defaultHeight"
+            @node-click="clickNode"
+        />
         <div style="max-width: 240px">
           <el-pagination size="small"
                          layout="prev, pager, next"
@@ -53,28 +53,52 @@
       <!--      </el-select>-->
 
       <el-table v-loading="state.dataListLoading" :data="state.dataList" border
-                @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
+                @selection-change="state.dataListSelectionChangeHandle" style="width: 100%;height: 100%"
+      >
         <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
         <!--              <el-table-column prop="id" label="" header-align="center" align="center"></el-table-column>-->
-<!--        <el-table-column prop="animeId" label="动漫id" header-align="center" align="center"></el-table-column>-->
-        <el-table-column prop="name" label="角色名" header-align="center" align="center" min-width="100px"></el-table-column>
-        <el-table-column prop="age" label="角色年龄" header-align="center" align="center" min-width="50px"></el-table-column>
-        <el-table-column prop="birthday" label="角色出生日期" header-align="center" align="center" min-width="80px">
+        <!--        <el-table-column prop="animeId" label="动漫id" header-align="center" align="center"></el-table-column>-->
+        <el-table-column prop="name" label="角色名" header-align="center" align="center"
+                         min-width="100px"></el-table-column>
+        <el-table-column prop="age" label="角色年龄" header-align="center" align="center"
+                         min-width="50px"></el-table-column>
+        <el-table-column prop="birthday" label="角色出生日期" header-align="center" align="center" min-width="90px">
           <template #default="scope">
-            <el-date-picker
-                v-model="scope.row.birthday"
-                readonly
-                style="width: 100px;"
-                size="small"
-            />
+            <!--            <el-date-picker-->
+            <!--                v-model="scope.row.birthday"-->
+            <!--                readonly-->
+            <!--                style="width: 100px;"-->
+            <!--                size="small"-->
+            <!--            />-->
+            <el-tag v-if="scope.row.birthday !== ''" effect="light">
+              {{ scope.row.birthday }}
+            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="description" label="角色描述" header-align="center" align="center" min-width="200px"></el-table-column>
+        <el-table-column prop="description" label="角色描述" header-align="center" align="center" min-width="200px">
+          <template #default="scope">
+            <el-popover
+                width="500"
+                trigger="hover"
+                effect="dark"
+                placement="bottom"
+                :open-delay="500"
+                :content="scope.row.description"
+            >
+              <template #reference>
+                <div class="text-over">{{ scope.row.description }}</div>
+              </template>
+            </el-popover>
+          </template>
+
+        </el-table-column>
         <el-table-column prop="imageUrl" label="角色图片" header-align="center" align="center" min-width="150px">
           <template #default="scope">
             <el-image preview-teleported :src="scope.row.imageUrl" :preview-src-list="[scope.row.imageUrl]"></el-image>
           </template>
         </el-table-column>
+        <el-table-column prop="cvName" label="配音演员" header-align="center" align="center"
+                         min-width="130px"></el-table-column>
         <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
           <template v-slot="scope">
             <el-button v-if="state.hasPermission('anime:animecharacter:update')" type="primary" link
@@ -146,17 +170,19 @@ const clickNode = (data: TreeNodeData) => {
 let defaultHeight = ref({})
 
 const addOrUpdateHandle = (id?: number) => {
-  console.log(animeId,"out")
+  console.log(animeId, "out")
   addOrUpdateRef.value.init(id);
 };
 
 //侧边栏
 let animeInfo = ref({})
-let page = reactive({limit:25, page:1, name:''})
+let page = reactive({limit: 25, page: 1, name: ''})
 
-const getAnimeInfoTree = async (page: any) => {axios.get('/api/anime/animeinfo/getInfoTree', {params: page}).then((res) => {
-  animeInfo.value = res.data
-})}
+const getAnimeInfoTree = async (page: any) => {
+  axios.get('/api/anime/animeinfo/getInfoTree', {params: page}).then((res) => {
+    animeInfo.value = res.data
+  })
+}
 
 const onQueryChanged = (query: string) => {
   // TODO: fix typing when refactor tree-v2
@@ -166,15 +192,17 @@ const onQueryChanged = (query: string) => {
   getAnimeTreeByName(page)
 }
 
-const getAnimeTreeByName = async (page: any) => {axios.get("/api/anime/animeinfo/getAnimeTreeByName", {params: page}).then((res) => {
-  animeInfo.value = res.data
-})}
+const getAnimeTreeByName = async (page: any) => {
+  axios.get("/api/anime/animeinfo/getAnimeTreeByName", {params: page}).then((res) => {
+    animeInfo.value = res.data
+  })
+}
 
 const pageChange = async (num: number) => {
   page.page = num
-  if (query !== null){
+  if (query !== null) {
     getAnimeTreeByName(page)
-  }else {
+  } else {
     getAnimeInfoTree(page)
   }
 }

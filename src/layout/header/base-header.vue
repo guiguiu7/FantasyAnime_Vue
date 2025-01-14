@@ -56,7 +56,7 @@ export default defineComponent({
         </div>
       </div>
       <div style="flex-shrink: 0">
-        <expand :userName="store.state.user.username"></expand>
+        <expand :userName="store.state.user.username" :headUrl="store.state.user.headUrl"></expand>
       </div>
     </div>
   </div>

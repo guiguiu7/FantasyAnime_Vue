@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="never" class="aui-card--fill">
+  <el-card shadow="never" class="aui-card--fill" style="height: 80vh">
     <div class="mod-home">
       <h3>项目介绍</h3>
       <ul>

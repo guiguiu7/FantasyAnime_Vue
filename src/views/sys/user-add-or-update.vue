@@ -4,6 +4,9 @@
       <el-form-item prop="username" label="用户名">
         <el-input v-model="dataForm.username" placeholder="用户名"></el-input>
       </el-form-item>
+      <el-form-item prop="headUrl" label="头像">
+        <el-input v-model="dataForm.headUrl" placeholder="头像"></el-input>
+      </el-form-item>
       <el-form-item prop="deptName" label="所属部门">
         <ren-dept-tree v-model="dataForm.deptId" placeholder="选择部门" v-model:deptName="dataForm.deptName"></ren-dept-tree>
       </el-form-item>
@@ -59,6 +62,7 @@ const dataFormRef = ref();
 const dataForm = reactive({
   id: "",
   username: "",
+  headUrl: "",
   deptId: "",
   deptName: "",
   password: "",
