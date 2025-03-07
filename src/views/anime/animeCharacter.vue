@@ -1,5 +1,5 @@
 <template>
-  <div class="mod-anime__animecharacter">
+  <div class="mod-anime__animeCharacter">
     <el-form :inline="true" :model="state.dataForm" @keyup.enter="state.getDataList()">
       <el-form-item>
         <el-input v-model="state.dataForm.name" placeholder="名称" clearable></el-input>
@@ -8,13 +8,13 @@
         <el-button @click="state.getDataList()">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:animecharacter:save')" type="primary"
+        <el-button v-if="state.hasPermission('anime:animeCharacter:save')" type="primary"
                    @click="addOrUpdateHandle()">
           新增
         </el-button>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:animecharacter:delete')" type="danger"
+        <el-button v-if="state.hasPermission('anime:animeCharacter:delete')" type="danger"
                    @click="state.deleteHandle()">删除
         </el-button>
       </el-form-item>
@@ -101,10 +101,10 @@
                          min-width="130px"></el-table-column>
         <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
           <template v-slot="scope">
-            <el-button v-if="state.hasPermission('anime:animecharacter:update')" type="primary" link
+            <el-button v-if="state.hasPermission('anime:animeCharacter:update')" type="primary" link
                        @click="addOrUpdateHandle(scope.row.id)">修改
             </el-button>
-            <el-button v-if="state.hasPermission('anime:animecharacter:delete')" type="primary" link
+            <el-button v-if="state.hasPermission('anime:animeCharacter:delete')" type="primary" link
                        @click="state.deleteHandle(scope.row.id)">删除
             </el-button>
           </template>
@@ -124,17 +124,17 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import {reactive, ref, toRefs, onMounted, watch} from "vue";
-import AddOrUpdate from "./module/animecharacter-add-or-update.vue";
+import AddOrUpdate from "./module/animeCharacter-add-or-update.vue";
 import axios from "axios"
 import {TreeNodeData} from "element-plus/es/components/tree-v2/src/types";
 import {ElTreeV2} from "element-plus";
 
 const view = reactive({
   deleteIsBatch: true,
-  getDataListURL: "/anime/animecharacter/page",
+  getDataListURL: "/anime/animeCharacter/page",
   getDataListIsPage: true,
-  exportURL: "/anime/animecharacter/export",
-  deleteURL: "/anime/animecharacter",
+  exportURL: "/anime/animeCharacter/export",
+  deleteURL: "/anime/animeCharacter",
   dataForm: {
     animeId: "",
     name: ""
@@ -179,7 +179,7 @@ let animeInfo = ref({})
 let page = reactive({limit: 25, page: 1, name: ''})
 
 const getAnimeInfoTree = async (page: any) => {
-  axios.get('/api/anime/animeinfo/getInfoTree', {params: page}).then((res) => {
+  axios.get('/api/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
     animeInfo.value = res.data
   })
 }
@@ -193,7 +193,7 @@ const onQueryChanged = (query: string) => {
 }
 
 const getAnimeTreeByName = async (page: any) => {
-  axios.get("/api/anime/animeinfo/getAnimeTreeByName", {params: page}).then((res) => {
+  axios.get("/api/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
     animeInfo.value = res.data
   })
 }

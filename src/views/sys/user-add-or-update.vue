@@ -7,9 +7,9 @@
       <el-form-item prop="headUrl" label="头像">
         <el-input v-model="dataForm.headUrl" placeholder="头像"></el-input>
       </el-form-item>
-      <el-form-item prop="deptName" label="所属部门">
-        <ren-dept-tree v-model="dataForm.deptId" placeholder="选择部门" v-model:deptName="dataForm.deptName"></ren-dept-tree>
-      </el-form-item>
+<!--      <el-form-item prop="deptName" label="所属部门">-->
+<!--        <ren-dept-tree v-model="dataForm.deptId" placeholder="选择部门" v-model:deptName="dataForm.deptName"></ren-dept-tree>-->
+<!--      </el-form-item>-->
       <el-form-item prop="password" label="密码" :class="{ 'is-required': !dataForm.id }">
         <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
       </el-form-item>
@@ -63,8 +63,8 @@ const dataForm = reactive({
   id: "",
   username: "",
   headUrl: "",
-  deptId: "",
-  deptName: "",
+  // deptId: "",
+  // deptName: "",
   password: "",
   confirmPassword: "",
   realName: "",
@@ -105,7 +105,7 @@ const validateMobile = (rule: any, value: string, callback: (e?: Error) => any):
 };
 const rules = ref({
   username: [{ required: true, message: "必填项不能为空", trigger: "blur" }],
-  deptName: [{ required: true, message: "必填项不能为空", trigger: "change" }],
+  // deptName: [{ required: true, message: "必填项不能为空", trigger: "change" }],
   password: [{ validator: validatePassword, trigger: "blur" }],
   confirmPassword: [{ validator: validateConfirmPassword, trigger: "blur" }],
   realName: [{ required: true, message: "必填项不能为空", trigger: "blur" }],
@@ -116,7 +116,7 @@ const rules = ref({
 const init = (id?: number) => {
   visible.value = true;
   dataForm.id = "";
-  dataForm.deptId = "";
+  // dataForm.deptId = "";
 
   // 重置表单数据
   if (dataFormRef.value) {

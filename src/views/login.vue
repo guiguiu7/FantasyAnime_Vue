@@ -110,7 +110,7 @@ const onLogin = () => {
 .rr-login {
   width: 100vw;
   height: 100vh;
-  background-image: url("public/img.png");
+  background-image: url("/img.png");
   background-size: 100%;
   position: relative;
   display: flex;

@@ -1,27 +1,27 @@
 <template>
-  <div class="mod-anime__goodsinfo">
+  <div class="mod-anime__communityArticles">
     <el-form :inline="true" :model="state.dataForm" @keyup.enter="state.getDataList()">
+<!--      <el-form-item>-->
+<!--        <el-button v-if="state.hasPermission('anime:communityarticles:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
+<!--      </el-form-item>-->
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:goodsinfo:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button v-if="state.hasPermission('anime:goodsinfo:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
+        <el-button v-if="state.hasPermission('anime:communityArticles:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
 <!--              <el-table-column prop="id" label="id" header-align="center" align="center"></el-table-column>-->
-              <el-table-column prop="name" label="商品名称" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="description" label="商品描述" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="price" label="商品价格" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="num" label="商品数量" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="listDate" label="上架日期" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="sales" label="销量" header-align="center" align="center"></el-table-column>
+<!--              <el-table-column prop="userId" label="用户id" header-align="center" align="center"></el-table-column>-->
+              <el-table-column prop="userName" label="用户名" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="userAvatar" label="用户头像" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="content" label="文字内容" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="image" label="图片内容" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="releaseDate" label="发布日期" header-align="center" align="center"></el-table-column>
 <!--              <el-table-column prop="isDelete" label="是否删除" header-align="center" align="center"></el-table-column>-->
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
-          <el-button v-if="state.hasPermission('anime:goodsinfo:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="state.hasPermission('anime:goodsinfo:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="state.hasPermission('anime:communityArticles:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="state.hasPermission('anime:communityArticles:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -34,14 +34,14 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import { reactive, ref, toRefs } from "vue";
-import AddOrUpdate from "./module/goodsinfo-add-or-update.vue";
+import AddOrUpdate from "./module/communityArticles-add-or-update.vue";
 
 const view = reactive({
   deleteIsBatch: true,
-  getDataListURL: "/anime/goodsinfo/page",
+  getDataListURL: "/anime/communityArticles/page",
   getDataListIsPage: true,
-  exportURL: "/anime/goodsinfo/export",
-  deleteURL: "/anime/goodsinfo"
+  exportURL: "/anime/communityArticles/export",
+  deleteURL: "/anime/communityArticles"
 });
 
 const state = reactive({ ...useView(view), ...toRefs(view) });

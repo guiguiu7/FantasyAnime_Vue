@@ -1,23 +1,17 @@
 <template>
-  <el-dialog v-model="visible" :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :close-on-press-escape="false">
+  <el-dialog v-model="visible" :title="!dataForm.userId ? '新增' : '修改'" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="dataForm" :rules="rules" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
-          <el-form-item label="所属文章id" prop="articleId">
-        <el-input v-model="dataForm.articleId" placeholder="所属文章id"></el-input>
+          <el-form-item label="" prop="goodId">
+        <el-input v-model="dataForm.goodId" placeholder=""></el-input>
       </el-form-item>
-          <el-form-item label="所属用户id" prop="userId">
-        <el-input v-model="dataForm.userId" placeholder="所属用户id"></el-input>
+          <el-form-item label="商品数量" prop="num">
+        <el-input v-model="dataForm.num" placeholder="商品数量"></el-input>
       </el-form-item>
-          <el-form-item label="父id" prop="parentId">
-        <el-input v-model="dataForm.parentId" placeholder="父id"></el-input>
+          <el-form-item label="是否购买" prop="isBuy">
+        <el-input v-model="dataForm.isBuy" placeholder="是否购买"></el-input>
       </el-form-item>
-          <el-form-item label="内容" prop="content">
-        <el-input v-model="dataForm.content" placeholder="内容"></el-input>
-      </el-form-item>
-          <el-form-item label="点赞数" prop="like">
-        <el-input v-model="dataForm.like" placeholder="点赞数"></el-input>
-      </el-form-item>
-          <el-form-item label="回复评论id" prop="commentId">
-        <el-input v-model="dataForm.commentId" placeholder="回复评论id"></el-input>
+          <el-form-item label="是否删除" prop="isDelete">
+        <el-input v-model="dataForm.isDelete" placeholder="是否删除"></el-input>
       </el-form-item>
           <el-form-item label="更新时间" prop="updateTime">
         <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
@@ -43,52 +37,46 @@ const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '',  articleId: '',  userId: '',  parentId: '',  content: '',  like: '',  commentId: '',  updateTime: '',  createTime: ''});
+  userId: '',  goodId: '',  num: '',  isBuy: '',  isDelete: '',  updateTime: '',  createTime: ''});
 
 const rules = ref({
-          articleId: [
+          goodId: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          userId: [
+          num: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          parentId: [
+          isBuy: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          content: [
+          isDelete: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          like: [
-      { required: false, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          commentId: [
-      { required: false, message: '必填项不能为空', trigger: 'blur' }
     ],
           updateTime: [
-      { required: false, message: '必填项不能为空', trigger: 'blur' }
+      { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
           createTime: [
-      { required: false, message: '必填项不能为空', trigger: 'blur' }
+      { required: true, message: '必填项不能为空', trigger: 'blur' }
     ]
   });
 
-const init = (id?: number) => {
+const init = (userId?: number) => {
   visible.value = true;
-  dataForm.id = "";
+  dataForm.userId = "";
 
   // 重置表单数据
   if (dataFormRef.value) {
     dataFormRef.value.resetFields();
   }
 
-  if (id) {
-    getInfo(id);
+  if (userId) {
+    getInfo(userId);
   }
 };
 
 // 获取信息
-const getInfo = (id: number) => {
-  baseService.get("/anime/communityreview/" + id).then((res) => {
+const getInfo = (userId: number) => {
+  baseService.get("/anime/cartInfo/" + userId).then((res) => {
     Object.assign(dataForm, res.data);
   });
 };
@@ -99,7 +87,7 @@ const dataFormSubmitHandle = () => {
     if (!valid) {
       return false;
     }
-    (!dataForm.id ? baseService.post : baseService.put)("/anime/communityreview", dataForm).then((res) => {
+    (!dataForm.userId ? baseService.post : baseService.put)("/anime/cartInfo", dataForm).then((res) => {
       ElMessage.success({
         message: '成功',
         duration: 500,

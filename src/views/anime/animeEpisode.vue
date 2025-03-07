@@ -1,11 +1,11 @@
 <template>
-  <div class="mod-anime__animeepisode">
+  <div class="mod-anime__animeEpisode">
     <el-form :inline="true" :model="state.dataForm" @keyup.enter="state.getDataList()">
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:animeepisode:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="state.hasPermission('anime:animeEpisode:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:animeepisode:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
+        <el-button v-if="state.hasPermission('anime:animeEpisode:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
       </el-form-item>
     </el-form>
     <div style="display: flex; height: calc(100vh - 260px)">
@@ -47,8 +47,8 @@
               <el-table-column prop="description" label="描述" header-align="center" align="center"></el-table-column>
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
-          <el-button v-if="state.hasPermission('anime:animeepisode:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="state.hasPermission('anime:animeepisode:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="state.hasPermission('anime:animeEpisode:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="state.hasPermission('anime:animeEpisode:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,17 +63,17 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import AddOrUpdate from "./module/animeepisode-add-or-update.vue";
+import AddOrUpdate from "./module/animeEpisode-add-or-update.vue";
 import {ElTreeV2} from "element-plus";
 import {TreeNodeData} from "element-plus/es/components/tree-v2/src/types";
 import axios from "axios";
 
 const view = reactive({
   deleteIsBatch: true,
-  getDataListURL: "/anime/animeepisode/page",
+  getDataListURL: "/anime/animeEpisode/page",
   getDataListIsPage: true,
-  exportURL: "/anime/animeepisode/export",
-  deleteURL: "/anime/animeepisode",
+  exportURL: "/anime/animeEpisode/export",
+  deleteURL: "/anime/animeEpisode",
   dataForm: {
     animeId: "",
     name: ""
@@ -116,7 +116,7 @@ let defaultHeight = ref({})
 let animeInfo = ref({})
 let page = reactive({limit:25, page:1, name:''})
 
-const getAnimeInfoTree = async (page: any) => {axios.get('/api/anime/animeinfo/getInfoTree', {params: page}).then((res) => {
+const getAnimeInfoTree = async (page: any) => {axios.get('/api/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
   animeInfo.value = res.data
 })}
 
@@ -128,7 +128,7 @@ const onQueryChanged = (query: string) => {
   getAnimeTreeByName(page)
 }
 
-const getAnimeTreeByName = async (page: any) => {axios.get("/api/anime/animeinfo/getAnimeTreeByName", {params: page}).then((res) => {
+const getAnimeTreeByName = async (page: any) => {axios.get("/api/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
   animeInfo.value = res.data
   console.log(animeInfo)
 })}

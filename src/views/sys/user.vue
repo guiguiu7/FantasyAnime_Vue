@@ -7,9 +7,9 @@
       <el-form-item>
         <ren-select v-model="state.dataForm.gender" dict-type="gender" placeholder="性别"></ren-select>
       </el-form-item>
-      <el-form-item>
-        <ren-dept-tree v-model="state.dataForm.deptId" placeholder="选择部门" :query="true"></ren-dept-tree>
-      </el-form-item>
+<!--      <el-form-item>-->
+<!--        <ren-dept-tree v-model="state.dataForm.deptId" placeholder="选择部门" :query="true"></ren-dept-tree>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button @click="state.getDataList()">查询</el-button>
       </el-form-item>
@@ -31,7 +31,7 @@
           <el-image :src="scope.row.headUrl"/>
         </template>
       </el-table-column>
-      <el-table-column prop="deptName" label="所属部门" header-align="center" align="center"></el-table-column>
+<!--      <el-table-column prop="deptName" label="所属部门" header-align="center" align="center"></el-table-column>-->
       <el-table-column prop="email" label="邮箱" header-align="center" align="center"></el-table-column>
       <el-table-column prop="mobile" label="手机号" sortable="custom" header-align="center" align="center"></el-table-column>
       <el-table-column prop="gender" label="性别" sortable="custom" header-align="center" align="center">
@@ -72,7 +72,7 @@ const view = reactive({
   exportURL: "/sys/user/export",
   dataForm: {
     username: "",
-    deptId: "",
+    // deptId: "",
     postId: "",
     gender: ""
   }

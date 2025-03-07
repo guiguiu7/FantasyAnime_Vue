@@ -1,11 +1,20 @@
 <template>
   <el-dialog v-model="visible" :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="dataForm" :rules="rules" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
-          <el-form-item label="动漫类型名" prop="name">
-        <el-input v-model="dataForm.name" placeholder="动漫类型名"></el-input>
+          <el-form-item label="活动id" prop="aid">
+        <el-input v-model="dataForm.aid" placeholder="活动id"></el-input>
       </el-form-item>
-          <el-form-item label="动漫类型名" prop="nameEn">
-        <el-input v-model="dataForm.nameEn" placeholder="动漫类型名"></el-input>
+          <el-form-item label="参加者id" prop="uid">
+        <el-input v-model="dataForm.uid" placeholder="参加者id"></el-input>
+      </el-form-item>
+          <el-form-item label="是否删除" prop="isDelete">
+        <el-input v-model="dataForm.isDelete" placeholder="是否删除"></el-input>
+      </el-form-item>
+          <el-form-item label="更新时间" prop="updateTime">
+        <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
+      </el-form-item>
+          <el-form-item label="创建时间" prop="createTime">
+        <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
       </el-form-item>
       </el-form>
     <template #footer>
@@ -25,13 +34,22 @@ const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '',  name: '',  nameEn: ''});
+  id: '',  aid: '',  uid: '',  isDelete: '',  updateTime: '',  createTime: ''});
 
 const rules = ref({
-          name: [
+          aid: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          nameEn: [
+          uid: [
+      { required: true, message: '必填项不能为空', trigger: 'blur' }
+    ],
+          isDelete: [
+      { required: true, message: '必填项不能为空', trigger: 'blur' }
+    ],
+          updateTime: [
+      { required: true, message: '必填项不能为空', trigger: 'blur' }
+    ],
+          createTime: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ]
   });
@@ -52,7 +70,7 @@ const init = (id?: number) => {
 
 // 获取信息
 const getInfo = (id: number) => {
-  baseService.get("/anime/animetype/" + id).then((res) => {
+  baseService.get("/anime/activityRecord/" + id).then((res) => {
     Object.assign(dataForm, res.data);
   });
 };
@@ -63,7 +81,7 @@ const dataFormSubmitHandle = () => {
     if (!valid) {
       return false;
     }
-    (!dataForm.id ? baseService.post : baseService.put)("/anime/animetype", dataForm).then((res) => {
+    (!dataForm.id ? baseService.post : baseService.put)("/anime/activityRecord", dataForm).then((res) => {
       ElMessage.success({
         message: '成功',
         duration: 500,

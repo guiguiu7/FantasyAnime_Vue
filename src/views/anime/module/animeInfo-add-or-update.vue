@@ -168,7 +168,7 @@ const init = (id?: number) => {
 
 // 获取信息
 const getInfo = (id: number) => {
-  baseService.get("/anime/animeinfo/" + id).then((res) => {
+  baseService.get("/anime/animeInfo/" + id).then((res) => {
     Object.assign(dataForm, res.data);
   });
 };
@@ -179,7 +179,7 @@ const dataFormSubmitHandle = () => {
     if (!valid) {
       return false;
     }
-    (!dataForm.id ? baseService.post : baseService.put)("/anime/animeinfo", dataForm).then((res) => {
+    (!dataForm.id ? baseService.post : baseService.put)("/anime/animeInfo", dataForm).then((res) => {
       ElMessage.success({
         message: '成功',
         duration: 500,

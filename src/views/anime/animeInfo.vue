@@ -1,5 +1,5 @@
 <template>
-  <div class="mod-anime__animeinfo">
+  <div class="mod-anime__animeInfo">
     <el-form :inline="true" :model="state.dataForm" @keyup.enter="state.getDataList()">
       <el-form-item>
         <el-input v-model="state.dataForm.name" placeholder="名称" clearable></el-input>
@@ -8,11 +8,11 @@
         <el-button @click="state.getDataList()">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:animeinfo:save')" type="primary" @click="addOrUpdateHandle()">新增
+        <el-button v-if="state.hasPermission('anime:animeInfo:save')" type="primary" @click="addOrUpdateHandle()">新增
         </el-button>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:animeinfo:delete')" type="danger" @click="state.deleteHandle()">
+        <el-button v-if="state.hasPermission('anime:animeInfo:delete')" type="danger" @click="state.deleteHandle()">
           删除
         </el-button>
       </el-form-item>
@@ -95,14 +95,14 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import {computed, reactive, ref, toRefs} from "vue";
-import AddOrUpdate from "./module/animeinfo-add-or-update.vue";
+import AddOrUpdate from "./module/animeInfo-add-or-update.vue";
 
 const view = reactive({
   deleteIsBatch: true,
-  getDataListURL: "/anime/animeinfo/page",
+  getDataListURL: "/anime/animeInfo/page",
   getDataListIsPage: true,
-  exportURL: "/anime/animeinfo/export",
-  deleteURL: "/anime/animeinfo",
+  exportURL: "/anime/animeInfo/export",
+  deleteURL: "/anime/animeInfo",
   dataForm: {
     name: ""
   }

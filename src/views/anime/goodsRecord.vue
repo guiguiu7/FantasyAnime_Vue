@@ -1,11 +1,11 @@
 <template>
-  <div class="mod-anime__goodsuserrelation">
+  <div class="mod-anime__goodsRecord">
     <el-form :inline="true" :model="state.dataForm" @keyup.enter="state.getDataList()">
 <!--      <el-form-item>-->
 <!--        <el-button v-if="state.hasPermission('anime:goodsuserrelation:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>-->
 <!--      </el-form-item>-->
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:goodsuserrelation:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
+        <el-button v-if="state.hasPermission('anime:goodsRecord:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
@@ -20,8 +20,8 @@
 <!--              <el-table-column prop="isDelete" label="是否删除" header-align="center" align="center"></el-table-column>-->
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
-          <el-button v-if="state.hasPermission('anime:goodsuserrelation:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="state.hasPermission('anime:goodsuserrelation:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="state.hasPermission('anime:goodsRecord:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="state.hasPermission('anime:goodsRecord:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -34,14 +34,14 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import { reactive, ref, toRefs } from "vue";
-import AddOrUpdate from "./module/goodsuserrelation-add-or-update.vue";
+import AddOrUpdate from "./module/goodsRecord-add-or-update.vue";
 
 const view = reactive({
   deleteIsBatch: true,
-  getDataListURL: "/anime/goodsuserrelation/page",
+  getDataListURL: "/anime/goodsRecord/page",
   getDataListIsPage: true,
-  exportURL: "/anime/goodsuserrelation/export",
-  deleteURL: "/anime/goodsuserrelation"
+  exportURL: "/anime/goodsRecord/export",
+  deleteURL: "/anime/goodsRecord"
 });
 
 const state = reactive({ ...useView(view), ...toRefs(view) });

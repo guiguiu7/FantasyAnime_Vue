@@ -16,7 +16,7 @@
 <!--        <li>支持MySQL、达梦、Oracle、SQL Server、PostgreSQL等主流数据库</li>-->
 <!--        <li>前后端分离，通过token进行数据交互，可独立部署</li>-->
 <!--        <li>动态菜单，通过菜单管理统一管理访问路由</li>-->
-<!--        <li>演示地址：<a href="http://demo.open.renren.io/renren-security" target="_blank">http://demo.open.renren.io/renren-security</a> (账号密码：admin/admin)</li>-->
+<!--        <li>演示地址：<a href="http://anime.open.renren.io/renren-security" target="_blank">http://anime.open.renren.io/renren-security</a> (账号密码：admin/admin)</li>-->
 <!--      </ul>-->
 <!--      <h3>获取帮助</h3>-->
 <!--      <ul>-->
