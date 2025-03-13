@@ -10,12 +10,8 @@
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-              <el-table-column prop="id" label="" header-align="center" align="center"></el-table-column>
               <el-table-column prop="aid" label="活动id" header-align="center" align="center"></el-table-column>
               <el-table-column prop="uid" label="参加者id" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="isDelete" label="是否删除" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="updateTime" label="更新时间" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="createTime" label="创建时间" header-align="center" align="center"></el-table-column>
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
           <el-button v-if="state.hasPermission('anime:activityRecord:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -32,7 +28,7 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import { reactive, ref, toRefs } from "vue";
-import AddOrUpdate from "./activityrecord-add-or-update.vue";
+import AddOrUpdate from "./module/activityRecord-add-or-update.vue";
 
 const view = reactive({
   deleteIsBatch: true,

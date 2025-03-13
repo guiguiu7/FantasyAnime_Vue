@@ -73,10 +73,10 @@
       <el-table-column prop="members" label="粉丝数" header-align="center" align="center" min-width="100px" sortable="custom"></el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
-          <el-button v-if="state.hasPermission('anime:animeinfo:update')" type="primary" link
+          <el-button v-if="state.hasPermission('anime:animeInfo:update')" type="primary" link
                      @click="addOrUpdateHandle(scope.row.id)">修改
           </el-button>
-          <el-button v-if="state.hasPermission('anime:animeinfo:delete')" type="primary" link
+          <el-button v-if="state.hasPermission('anime:animeInfo:delete')" type="primary" link
                      @click="state.deleteHandle(scope.row.id)">删除
           </el-button>
         </template>

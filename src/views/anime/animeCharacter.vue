@@ -179,7 +179,7 @@ let animeInfo = ref({})
 let page = reactive({limit: 25, page: 1, name: ''})
 
 const getAnimeInfoTree = async (page: any) => {
-  axios.get('/api/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
+  axios.get('/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
     animeInfo.value = res.data
   })
 }
@@ -193,7 +193,7 @@ const onQueryChanged = (query: string) => {
 }
 
 const getAnimeTreeByName = async (page: any) => {
-  axios.get("/api/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
+  axios.get("/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
     animeInfo.value = res.data
   })
 }

@@ -54,7 +54,7 @@ const addOrUpdateHandle = (id?: number) => {
 };
 
 function changeStatus(row: any){
-  axios.post('/api/anime/animeType/changeStatus',{id : row.id, status: row.status}).then(() => {
+  axios.post('/anime/animeType/changeStatus',{id : row.id, status: row.status}).then(() => {
     ElMessage({
       message: '修改状态成功',
       type: 'success',

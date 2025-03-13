@@ -10,14 +10,13 @@
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-              <el-table-column prop="articleId" label="所属文章id" header-align="center" align="center"></el-table-column>
+<!--              <el-table-column prop="articleId" label="所属文章id" header-align="center" align="center"></el-table-column>-->
               <el-table-column prop="userId" label="所属用户id" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="parentId" label="父id" header-align="center" align="center"></el-table-column>
+<!--              <el-table-column prop="parentId" label="父id" header-align="center" align="center"></el-table-column>-->
               <el-table-column prop="content" label="内容" header-align="center" align="center"></el-table-column>
               <el-table-column prop="like" label="点赞数" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="commentId" label="回复评论id" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="updateTime" label="更新时间" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="createTime" label="创建时间" header-align="center" align="center"></el-table-column>
+<!--              <el-table-column prop="commentId" label="回复评论id" header-align="center" align="center"></el-table-column>-->
+              <el-table-column prop="createTime" label="评论时间" header-align="center" align="center"></el-table-column>
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
           <el-button v-if="state.hasPermission('anime:communityComment:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

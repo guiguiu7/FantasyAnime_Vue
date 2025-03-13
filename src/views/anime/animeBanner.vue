@@ -34,7 +34,7 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import { reactive, ref, toRefs } from "vue";
-import AddOrUpdate from "./animebanner-add-or-update.vue";
+import AddOrUpdate from "./module/animebanner-add-or-update.vue";
 
 const view = reactive({
   deleteIsBatch: true,

@@ -22,15 +22,32 @@
             value-format="MM-DD"
         />
       </el-form-item>
-      <el-form-item label="角色图片url" prop="imageUrl">
-        <el-input v-model="dataForm.imageUrl" placeholder="角色图片url"></el-input>
-      </el-form-item>
       <el-form-item label="配音演员名" prop="cvName">
         <el-input v-model="dataForm.cvName" placeholder="配音演员名"></el-input>
       </el-form-item>
       <el-form-item label="角色描述" prop="description">
         <el-input v-model="dataForm.description" placeholder="角色描述" type="textarea" :autosize="{minRows: 3, maxRows:6}"></el-input>
       </el-form-item>
+      <el-upload
+          ref="uploadFile"
+          v-model:file-list="fileList"
+          class="update"
+          action="#"
+          :http-request="upload"
+          :on-remove="handleRemove"
+          :on-success="handleSuccess"
+          :limit="1"
+          :on-exceed="handleExceed"
+          accept=".jpg,.png"
+          style="padding-left: 120px;"
+      >
+        <el-button type="primary">上传图片</el-button>
+        <template #tip>
+          <div class="el-upload__tip">
+            上传角色图片，限制jpg,png
+          </div>
+        </template>
+      </el-upload>
     </el-form>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
@@ -40,9 +57,11 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref, toRef} from "vue";
+import {computed, reactive, ref, toRef} from "vue";
 import baseService from "@/service/baseService";
-import {ElMessage} from "element-plus";
+import {ElMessage, UploadProps} from "element-plus";
+import axios from "axios";
+import {getToken} from "@/utils/cache";
 
 const emit = defineEmits(["refreshDataList"]);
 
@@ -87,11 +106,13 @@ const init = (id?: number) => {
   // 重置表单数据
   if (dataFormRef.value) {
     dataFormRef.value.resetFields();
+    //重置文件列表
+    cleanFiles()
   }
 
 
   dataForm.animeId = <string>props.anime
-  console.log(dataForm)
+
   if (id) {
     getInfo(id);
   }
@@ -123,6 +144,56 @@ const dataFormSubmitHandle = () => {
   });
 };
 
+
+// 上传视频--------------------------------------
+const uploadFile = ref();
+
+// 文件列表
+let fileList = computed(() => {
+  if (dataForm.imageUrl != null){
+    return [{uid: dataForm.imageUrl, name: dataForm.imageUrl}]
+  }
+})
+const handleExceed: UploadProps['onExceed'] = (uploadFiles) => {
+  ElMessage.warning(
+      "只能上传一个文件"
+  )
+}
+const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
+  ElMessage({
+    type: 'warning',
+    message: '已移除文件',
+  })
+}
+function upload(param: { file: string | Blob; }) {
+  const formData = new FormData()
+  formData.append('file', param.file)
+  formData.append('animeId', dataForm.animeId)
+  formData.append('id', dataForm.id)
+  axios.post('anime/animeCharacter/upload', formData, {headers: {'Token': getToken()}}).then((res) => {
+    if (res.data){
+      ElMessage({
+        type: 'success',
+        message: '文件上传成功'
+      })
+      dataForm.imageUrl = res.data
+    } else {
+      throw new Error("文件上传失败")
+    }
+  }).catch((err) => {
+    ElMessage({
+      type: "warning",
+      message: err
+    })
+  })
+}
+const handleSuccess: UploadProps['onSuccess'] = (response, uploadFile, uploadFiles) => {
+  console.log(dataForm)
+}
+const cleanFiles = () => {
+  uploadFile.value.clearFiles()
+}
+//--------------------------------------------------------------
 defineExpose({
   init
 });

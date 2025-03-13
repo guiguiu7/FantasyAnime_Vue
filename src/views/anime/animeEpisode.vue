@@ -91,7 +91,7 @@ const addOrUpdateHandle = (id?: number) => {
 
 onMounted(async () => {
   // 设置Tree V2高度
-  defaultHeight.value = document.documentElement.clientHeight - 330
+  defaultHeight.value = window.innerHeight - 330
   await getAnimeInfoTree(page)
   await state.getDataList()
 })
@@ -116,7 +116,7 @@ let defaultHeight = ref({})
 let animeInfo = ref({})
 let page = reactive({limit:25, page:1, name:''})
 
-const getAnimeInfoTree = async (page: any) => {axios.get('/api/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
+const getAnimeInfoTree = async (page: any) => {axios.get('/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
   animeInfo.value = res.data
 })}
 
@@ -128,7 +128,7 @@ const onQueryChanged = (query: string) => {
   getAnimeTreeByName(page)
 }
 
-const getAnimeTreeByName = async (page: any) => {axios.get("/api/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
+const getAnimeTreeByName = async (page: any) => {axios.get("/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
   animeInfo.value = res.data
   console.log(animeInfo)
 })}
