@@ -7,15 +7,6 @@
           <el-form-item label="参加者id" prop="uid">
         <el-input v-model="dataForm.uid" placeholder="参加者id"></el-input>
       </el-form-item>
-          <el-form-item label="是否删除" prop="isDelete">
-        <el-input v-model="dataForm.isDelete" placeholder="是否删除"></el-input>
-      </el-form-item>
-          <el-form-item label="更新时间" prop="updateTime">
-        <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
-      </el-form-item>
-          <el-form-item label="创建时间" prop="createTime">
-        <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
-      </el-form-item>
       </el-form>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>

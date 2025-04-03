@@ -128,6 +128,7 @@ import AddOrUpdate from "./module/animeCharacter-add-or-update.vue";
 import axios from "axios"
 import {TreeNodeData} from "element-plus/es/components/tree-v2/src/types";
 import {ElTreeV2} from "element-plus";
+import {getToken} from "@/utils/cache";
 
 const view = reactive({
   deleteIsBatch: true,
@@ -179,7 +180,7 @@ let animeInfo = ref({})
 let page = reactive({limit: 25, page: 1, name: ''})
 
 const getAnimeInfoTree = async (page: any) => {
-  axios.get('/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
+  axios.get('/anime/animeInfo/getInfoTree', {params: page, headers: {'Token': getToken()}}).then((res) => {
     animeInfo.value = res.data
   })
 }
@@ -193,7 +194,7 @@ const onQueryChanged = (query: string) => {
 }
 
 const getAnimeTreeByName = async (page: any) => {
-  axios.get("/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
+  axios.get("/anime/animeInfo/getAnimeTreeByName", {params: page, headers: {'Token': getToken()}}).then((res) => {
     animeInfo.value = res.data
   })
 }

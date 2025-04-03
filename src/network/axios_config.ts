@@ -4,7 +4,7 @@ import axios from 'axios'
 // import { Message } from 'element-plus'
 
 //配置基础url、超时时间、post请求头
-axios.defaults.baseURL = 'http://127.0.0.1:9999/api';
+axios.defaults.baseURL = 'http://127.0.0.1:8080';
 axios.defaults.timeout = 10000;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 

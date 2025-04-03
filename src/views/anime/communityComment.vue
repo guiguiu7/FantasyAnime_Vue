@@ -2,20 +2,13 @@
   <div class="mod-anime__communityComment">
     <el-form :inline="true" :model="state.dataForm" @keyup.enter="state.getDataList()">
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:communityComment:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-      </el-form-item>
-      <el-form-item>
         <el-button v-if="state.hasPermission('anime:communityComment:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-<!--              <el-table-column prop="articleId" label="所属文章id" header-align="center" align="center"></el-table-column>-->
-              <el-table-column prop="userId" label="所属用户id" header-align="center" align="center"></el-table-column>
-<!--              <el-table-column prop="parentId" label="父id" header-align="center" align="center"></el-table-column>-->
+              <el-table-column prop="userName" label="所属用户" header-align="center" align="center"></el-table-column>
               <el-table-column prop="content" label="内容" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="like" label="点赞数" header-align="center" align="center"></el-table-column>
-<!--              <el-table-column prop="commentId" label="回复评论id" header-align="center" align="center"></el-table-column>-->
               <el-table-column prop="createTime" label="评论时间" header-align="center" align="center"></el-table-column>
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">

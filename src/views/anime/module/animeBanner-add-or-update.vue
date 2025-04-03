@@ -1,26 +1,45 @@
 <template>
   <el-dialog v-model="visible" :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="dataForm" :rules="rules" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
-          <el-form-item label="" prop="animeId">
-        <el-input v-model="dataForm.animeId" placeholder=""></el-input>
-      </el-form-item>
-          <el-form-item label="轮播图地址" prop="url">
-        <el-input v-model="dataForm.url" placeholder="轮播图地址"></el-input>
+          <el-form-item label="动漫" prop="animeId">
+            <el-select
+                v-model="dataForm.animeId"
+                filterable
+                remote
+                reserve-keyword
+                placeholder="Please enter a keyword"
+                :remote-method="remoteMethod"
+                style="width: 200px"
+            >
+              <el-option
+                  v-for="item in animeList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+              />
+            </el-select>
       </el-form-item>
           <el-form-item label="轮播图名称" prop="name">
         <el-input v-model="dataForm.name" placeholder="轮播图名称"></el-input>
       </el-form-item>
-          <el-form-item label="状态" prop="status">
-        <el-input v-model="dataForm.status" placeholder="状态"></el-input>
-      </el-form-item>
-          <el-form-item label="是否删除" prop="isDelete">
-        <el-input v-model="dataForm.isDelete" placeholder="是否删除"></el-input>
-      </el-form-item>
-          <el-form-item label="更新时间" prop="updateTime">
-        <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
-      </el-form-item>
-          <el-form-item label="创建时间" prop="createTime">
-        <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
+      <el-form-item label="轮播图" prop="url">
+        <el-upload
+            ref="uploadFile"
+            v-model:file-list="fileList"
+            action="#"
+            :http-request="upload"
+            :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :limit="1"
+            :on-exceed="handleExceed"
+        >
+          <el-button type="primary">上传图片</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              上传轮播图
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
       </el-form>
     <template #footer>
@@ -31,16 +50,18 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import {computed, reactive, ref} from "vue";
 import baseService from "@/service/baseService";
-import { ElMessage } from "element-plus";
+import {ElMessage, UploadProps} from "element-plus";
+import axios from "axios";
+import {getToken} from "@/utils/cache";
 const emit = defineEmits(["refreshDataList"]);
 
 const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '',  animeId: '',  url: '',  name: '',  status: '',  isDelete: '',  updateTime: '',  createTime: ''});
+  id: '',  animeId: '',  url: null,  name: '',  status: '',  isDelete: '',  updateTime: '',  createTime: ''});
 
 const rules = ref({
           animeId: [
@@ -66,6 +87,16 @@ const rules = ref({
     ]
   });
 
+// 动漫数据
+const animeList = ref([{id: '',name: ''}])
+const remoteMethod = (query: string) => {
+  axios.get(`/anime/animeInfo/remoteSearchByName?name=${query}`,
+      {headers: {'token': getToken()}}).then(({data}) => {
+    animeList.value = data.data
+    console.log(animeList.value)
+  })
+}
+
 const init = (id?: number) => {
   visible.value = true;
   dataForm.id = "";
@@ -73,6 +104,7 @@ const init = (id?: number) => {
   // 重置表单数据
   if (dataFormRef.value) {
     dataFormRef.value.resetFields();
+    cleanFiles()
   }
 
   if (id) {
@@ -105,6 +137,58 @@ const dataFormSubmitHandle = () => {
     });
   });
 };
+
+// 上传商品图片
+
+const uploadFile = ref();
+
+let fileList = computed(() => {
+  if (dataForm.url != null){
+    return [{uid: dataForm.url, name: dataForm.url}]
+  }
+})
+
+const handleExceed: UploadProps['onExceed'] = (uploadFiles) => {
+  ElMessage.warning(
+      "只能上传一张商品图片"
+  )
+}
+const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
+  dataForm.url = null
+  ElMessage({
+    type: 'warning',
+    message: '已移除文件',
+  })
+}
+const handleSuccess: UploadProps['onSuccess'] = (response, uploadFile, uploadFiles) => {
+  console.log(uploadFile)
+}
+
+function upload(param: { file: string | Blob; }) {
+  const formData = new FormData()
+  formData.append('file', param.file)
+  formData.append('id', dataForm.id)
+  axios.post('anime/animeBanner/upload', formData, {headers: {'Token': getToken()}}).then((res) => {
+    if (res.data){
+      ElMessage({
+        type: 'success',
+        message: '文件上传成功'
+      })
+      dataForm.url = res.data
+    } else {
+      throw new Error("文件上传失败")
+    }
+  }).catch((err) => {
+    ElMessage({
+      type: 'success',
+      message: err
+    })
+  })
+}
+const cleanFiles = () => {
+  uploadFile.value.clearFiles()
+}
+
 
 defineExpose({
   init

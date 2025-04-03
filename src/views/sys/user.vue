@@ -7,9 +7,6 @@
       <el-form-item>
         <ren-select v-model="state.dataForm.gender" dict-type="gender" placeholder="性别"></ren-select>
       </el-form-item>
-<!--      <el-form-item>-->
-<!--        <ren-dept-tree v-model="state.dataForm.deptId" placeholder="选择部门" :query="true"></ren-dept-tree>-->
-<!--      </el-form-item>-->
       <el-form-item>
         <el-button @click="state.getDataList()">查询</el-button>
       </el-form-item>
@@ -28,7 +25,7 @@
       <el-table-column prop="username" label="用户名" sortable="custom" header-align="center" align="center"></el-table-column>
       <el-table-column prop="headUrl" label="头像" header-align="center" align="center">
         <template #default="scope">
-          <el-image :src="scope.row.headUrl"/>
+            <el-image style="height: 100px;width: auto; object-fit: contain;" :src="scope.row.headUrl"/>
         </template>
       </el-table-column>
 <!--      <el-table-column prop="deptName" label="所属部门" header-align="center" align="center"></el-table-column>-->
@@ -85,3 +82,9 @@ const addOrUpdateHandle = (id?: number) => {
   addOrUpdateRef.value.init(id);
 };
 </script>
+<style scoped>
+.el-image {
+  width: 100px;
+  height: 100px;
+}
+</style>

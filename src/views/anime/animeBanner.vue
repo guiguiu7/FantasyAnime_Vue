@@ -10,14 +10,17 @@
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-              <el-table-column prop="id" label="id" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="animeId" label="" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="url" label="轮播图地址" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="url" label="轮播图" header-align="center" align="center">
+                <template #default="scope">
+                  <el-image preview-teleported :src="scope.row.url" :preview-src-list="[scope.row.url]"></el-image>
+                </template>
+              </el-table-column>
               <el-table-column prop="name" label="轮播图名称" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="status" label="状态" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="isDelete" label="是否删除" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="updateTime" label="更新时间" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="createTime" label="创建时间" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="status" label="状态" header-align="center" align="center">
+                <template #default="scope">
+                  <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="audit(scope.row)"/>
+                </template>
+              </el-table-column>
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
           <el-button v-if="state.hasPermission('anime:animeBanner:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -34,7 +37,10 @@
 <script lang="ts" setup>
 import useView from "@/hooks/useView";
 import { reactive, ref, toRefs } from "vue";
-import AddOrUpdate from "./module/animebanner-add-or-update.vue";
+import AddOrUpdate from "./module/animeBanner-add-or-update.vue";
+import axios from "axios";
+import {getToken} from "@/utils/cache";
+import {ElMessage} from "element-plus";
 
 const view = reactive({
   deleteIsBatch: true,
@@ -50,4 +56,17 @@ const addOrUpdateRef = ref();
 const addOrUpdateHandle = (id?: number) => {
   addOrUpdateRef.value.init(id);
 };
+
+
+const audit = (row: any) => {
+  axios.post("anime/animeBanner/audit",
+      {id: row.id, status: row.status},
+      { headers: {'Token': getToken()}}).then(({data}) => {
+    if (data.code == 0){
+      ElMessage.success(data.data)
+    }else {
+      ElMessage.error(data.data)
+    }
+  })
+}
 </script>

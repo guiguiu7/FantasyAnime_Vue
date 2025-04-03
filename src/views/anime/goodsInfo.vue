@@ -10,14 +10,17 @@
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-<!--              <el-table-column prop="id" label="id" header-align="center" align="center"></el-table-column>-->
+              <el-table-column prop="url" label="商品图片" header-align="center" align="center">
+                <template #default="scope">
+                  <el-image preview-teleported :src="scope.row.url" :preview-src-list="[scope.row.url]"></el-image>
+                </template>
+              </el-table-column>
               <el-table-column prop="name" label="商品名称" header-align="center" align="center"></el-table-column>
               <el-table-column prop="description" label="商品描述" header-align="center" align="center"></el-table-column>
               <el-table-column prop="price" label="商品价格" header-align="center" align="center"></el-table-column>
               <el-table-column prop="num" label="商品数量" header-align="center" align="center"></el-table-column>
               <el-table-column prop="listDate" label="上架日期" header-align="center" align="center"></el-table-column>
               <el-table-column prop="sales" label="销量" header-align="center" align="center"></el-table-column>
-<!--              <el-table-column prop="isDelete" label="是否删除" header-align="center" align="center"></el-table-column>-->
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
           <el-button v-if="state.hasPermission('anime:goodsInfo:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -51,3 +54,10 @@ const addOrUpdateHandle = (id?: number) => {
   addOrUpdateRef.value.init(id);
 };
 </script>
+<style scoped>
+.el-image {
+  height: 100px;
+  width: auto;
+  object-fit: contain;
+}
+</style>

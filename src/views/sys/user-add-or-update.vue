@@ -4,9 +4,6 @@
       <el-form-item prop="username" label="用户名">
         <el-input v-model="dataForm.username" placeholder="用户名"></el-input>
       </el-form-item>
-      <el-form-item prop="headUrl" label="头像">
-        <el-input v-model="dataForm.headUrl" placeholder="头像"></el-input>
-      </el-form-item>
 <!--      <el-form-item prop="deptName" label="所属部门">-->
 <!--        <ren-dept-tree v-model="dataForm.deptId" placeholder="选择部门" v-model:deptName="dataForm.deptName"></ren-dept-tree>-->
 <!--      </el-form-item>-->
@@ -39,6 +36,25 @@
           <el-radio :label="1">正常</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item prop="headUrl" label="头像">
+        <el-upload
+            ref="uploadFile"
+            v-model:file-list="fileList"
+            action="#"
+            :http-request="upload"
+            :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :limit="1"
+            :on-exceed="handleExceed"
+        >
+          <el-button type="primary">上传头像</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              上传头像
+            </div>
+          </template>
+        </el-upload>
+      </el-form-item>
     </el-form>
     <template v-slot:footer>
       <el-button @click="visible = false">取消</el-button>
@@ -48,11 +64,13 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import {computed, reactive, ref} from "vue";
 import baseService from "@/service/baseService";
 import { isEmail, isMobile } from "@/utils/utils";
 import { IObject } from "@/types/interface";
-import { ElMessage } from "element-plus";
+import {ElMessage, UploadProps} from "element-plus";
+import axios from "axios";
+import {getToken} from "@/utils/cache";
 const emit = defineEmits(["refreshDataList"]);
 
 const visible = ref(false);
@@ -62,7 +80,7 @@ const dataFormRef = ref();
 const dataForm = reactive({
   id: "",
   username: "",
-  headUrl: "",
+  headUrl: null,
   // deptId: "",
   // deptName: "",
   password: "",
@@ -106,8 +124,9 @@ const validateMobile = (rule: any, value: string, callback: (e?: Error) => any):
 const rules = ref({
   username: [{ required: true, message: "必填项不能为空", trigger: "blur" }],
   // deptName: [{ required: true, message: "必填项不能为空", trigger: "change" }],
-  password: [{ validator: validatePassword, trigger: "blur" }],
-  confirmPassword: [{ validator: validateConfirmPassword, trigger: "blur" }],
+  headUrl: [{ required: true, message: "必填项不能为空", trigger: "blur"}],
+  password: [{ required: true, validator: validatePassword, trigger: "blur" }],
+  confirmPassword: [{ required: true, validator: validateConfirmPassword, trigger: "blur" }],
   realName: [{ required: true, message: "必填项不能为空", trigger: "blur" }],
   email: [{ validator: validateEmail, trigger: "blur" }],
   mobile: [{ validator: validateMobile, trigger: "blur" }]
@@ -121,6 +140,7 @@ const init = (id?: number) => {
   // 重置表单数据
   if (dataFormRef.value) {
     dataFormRef.value.resetFields();
+    cleanFiles()
   }
 
   Promise.all([getRoleList()]).then(() => {
@@ -167,6 +187,59 @@ const dataFormSubmitHandle = () => {
     });
   });
 };
+
+// 上传商品图片
+
+const uploadFile = ref();
+
+let fileList = computed(() => {
+  if (dataForm.headUrl != null) {
+    return [{uid: dataForm.headUrl, name: dataForm.headUrl}]
+  }
+})
+
+const handleExceed: UploadProps['onExceed'] = (uploadFiles) => {
+  ElMessage.warning(
+      "只能上传一张头像"
+  )
+}
+const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
+  dataForm.headUrl = null
+  ElMessage({
+    type: 'warning',
+    message: '已移除文件',
+  })
+}
+const handleSuccess: UploadProps['onSuccess'] = (response, uploadFile, uploadFiles) => {
+  console.log(uploadFile)
+}
+
+function upload(param: { file: string | Blob; }) {
+  const formData = new FormData()
+  formData.append('file', param.file)
+  formData.append('id', dataForm.id)
+  axios.post('/sys/user/upload', formData, {headers: {'Token': getToken()}}).then((res) => {
+    if (res.data) {
+      ElMessage({
+        type: 'success',
+        message: '文件上传成功'
+      })
+      dataForm.headUrl = res.data
+    } else {
+      throw new Error("文件上传失败")
+    }
+  }).catch((err) => {
+    ElMessage({
+      type: 'success',
+      message: err
+    })
+  })
+}
+
+const cleanFiles = () => {
+  uploadFile.value.clearFiles()
+}
+
 
 defineExpose({
   init

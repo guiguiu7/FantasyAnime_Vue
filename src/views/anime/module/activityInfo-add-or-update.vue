@@ -4,32 +4,21 @@
           <el-form-item label="活动名称" prop="name">
         <el-input v-model="dataForm.name" placeholder="活动名称"></el-input>
       </el-form-item>
-          <el-form-item label="活动内容" prop="content">
-        <el-input v-model="dataForm.content" placeholder="活动内容"></el-input>
-      </el-form-item>
           <el-form-item label="开始时间" prop="startTime">
-        <el-input v-model="dataForm.startTime" placeholder="开始时间"></el-input>
+            <el-date-picker
+                v-model="dataForm.startTime"
+                value-format="YYYY-MM-DD HH:mm"
+                type="datetime"
+                placeholder="选择活动开始时间"
+            />
       </el-form-item>
           <el-form-item label="结束时间" prop="endTime">
-        <el-input v-model="dataForm.endTime" placeholder="结束时间"></el-input>
-      </el-form-item>
-          <el-form-item label="举办者" prop="organizerName">
-        <el-input v-model="dataForm.organizerName" placeholder="举办者"></el-input>
-      </el-form-item>
-          <el-form-item label="举办者id" prop="organizerId">
-        <el-input v-model="dataForm.organizerId" placeholder="举办者id"></el-input>
-      </el-form-item>
-          <el-form-item label="参加人数" prop="number">
-        <el-input v-model="dataForm.number" placeholder="参加人数"></el-input>
-      </el-form-item>
-          <el-form-item label="是否删除" prop="isDelete">
-        <el-input v-model="dataForm.isDelete" placeholder="是否删除"></el-input>
-      </el-form-item>
-          <el-form-item label="更新时间" prop="updateTime">
-        <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
-      </el-form-item>
-          <el-form-item label="创建时间" prop="createTime">
-        <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
+            <el-date-picker
+                v-model="dataForm.endTime"
+                value-format="YYYY-MM-DD HH:mm"
+                type="datetime"
+                placeholder="选择活动结束时间"
+            />
       </el-form-item>
       </el-form>
     <template #footer>
@@ -49,7 +38,7 @@ const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '',  name: '',  content: '',  startTime: '',  endTime: '',  organizerName: '',  organizerId: '',  number: '',  isDelete: '',  updateTime: '',  createTime: ''});
+  id: '',  name: '',  content: '',  startTime: '',  endTime: '',  organizerName: '',  organizerId: ''});
 
 const rules = ref({
           name: [
@@ -71,15 +60,6 @@ const rules = ref({
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
           number: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          isDelete: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          updateTime: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          createTime: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ]
   });

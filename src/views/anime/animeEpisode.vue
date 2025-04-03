@@ -67,6 +67,7 @@ import AddOrUpdate from "./module/animeEpisode-add-or-update.vue";
 import {ElTreeV2} from "element-plus";
 import {TreeNodeData} from "element-plus/es/components/tree-v2/src/types";
 import axios from "axios";
+import {getToken} from "@/utils/cache";
 
 const view = reactive({
   deleteIsBatch: true,
@@ -116,7 +117,7 @@ let defaultHeight = ref({})
 let animeInfo = ref({})
 let page = reactive({limit:25, page:1, name:''})
 
-const getAnimeInfoTree = async (page: any) => {axios.get('/anime/animeInfo/getInfoTree', {params: page}).then((res) => {
+const getAnimeInfoTree = async (page: any) => {axios.get('/anime/animeInfo/getInfoTree', {params: page, headers: {'Token': getToken()}}).then((res) => {
   animeInfo.value = res.data
 })}
 
@@ -128,7 +129,7 @@ const onQueryChanged = (query: string) => {
   getAnimeTreeByName(page)
 }
 
-const getAnimeTreeByName = async (page: any) => {axios.get("/anime/animeInfo/getAnimeTreeByName", {params: page}).then((res) => {
+const getAnimeTreeByName = async (page: any) => {axios.get("/anime/animeInfo/getAnimeTreeByName", {params: page, headers: {'Token': getToken()}}).then((res) => {
   animeInfo.value = res.data
   console.log(animeInfo)
 })}

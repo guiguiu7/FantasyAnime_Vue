@@ -1,37 +1,40 @@
 <template>
-  <el-dialog v-model="visible" :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-form :model="dataForm" :rules="rules" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
-          <el-form-item label="动漫id" prop="animeId">
+  <el-dialog v-model="visible" :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false"
+             :close-on-press-escape="false">
+    <el-form :model="dataForm" :rules="rules" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()"
+             label-width="120px">
+      <el-form-item label="动漫id" prop="animeId">
         <el-input v-model="dataForm.animeId" placeholder="动漫id" :disabled="dataForm.animeId !== null"></el-input>
       </el-form-item>
-          <el-form-item label="集数" prop="num">
-        <el-input v-model="dataForm.num" placeholder="集数"></el-input>
+      <el-form-item label="集数" prop="num">
+        <el-input v-model="dataForm.num" placeholder="集数" type="number"></el-input>
       </el-form-item>
-          <el-form-item label="标题名" prop="title">
+      <el-form-item label="标题名" prop="title">
         <el-input v-model="dataForm.title" placeholder="标题名"></el-input>
       </el-form-item>
-          <el-form-item label="描述" prop="description">
+      <el-form-item label="描述" prop="description">
         <el-input v-model="dataForm.description" placeholder="描述"></el-input>
       </el-form-item>
-      <el-upload
-          ref="uploadFile"
-          v-model:file-list="fileList"
-          class="update"
-          action="#"
-          :http-request="upload"
-          :on-remove="handleRemove"
-          :on-success="handleSuccess"
-          :limit="1"
-          :on-exceed="handleExceed"
-      >
-        <el-button type="primary">上传视频</el-button>
-        <template #tip>
-          <div class="el-upload__tip">
-            上传本集资源
-          </div>
-        </template>
-      </el-upload>
-      </el-form>
+      <el-form-item label="本集资源" prop="url">
+        <el-upload
+            ref="uploadFile"
+            v-model:file-list="fileList"
+            action="#"
+            :http-request="upload"
+            :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :limit="1"
+            :on-exceed="handleExceed"
+        >
+          <el-button type="primary">上传视频</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              上传本集资源
+            </div>
+          </template>
+        </el-upload>
+      </el-form-item>
+    </el-form>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
       <el-button type="primary" @click="dataFormSubmitHandle()">确定</el-button>
@@ -42,9 +45,10 @@
 <script lang="ts" setup>
 import {computed, reactive, ref} from "vue";
 import baseService from "@/service/baseService";
-import { UploadProps, UploadUserFile, ElMessage } from "element-plus";
-import { getToken } from "@/utils/cache";
+import {UploadProps, UploadUserFile, ElMessage} from "element-plus";
+import {getToken} from "@/utils/cache";
 import axios from "axios";
+
 const emit = defineEmits(["refreshDataList"]);
 
 const visible = ref(false);
@@ -52,30 +56,34 @@ const dataFormRef = ref();
 const uploadFile = ref();
 
 const dataForm = reactive({
-  id: '',  animeId: '',  num: '',  title: '',  description: '', url: ''});
+  id: '', animeId: '', num: '', title: '', description: '', url: null
+});
 
 const rules = ref({
-          animeId: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          num: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          title: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          description: [
-      { required: false, message: '必填项不能为空', trigger: 'blur' }
-    ]
-  });
+  animeId: [
+    {required: true, message: '必填项不能为空', trigger: 'blur'}
+  ],
+  num: [
+    {required: true, message: '必填项不能为空', trigger: 'blur'}
+  ],
+  title: [
+    {required: true, message: '必填项不能为空', trigger: 'blur'}
+  ],
+  description: [
+    {required: false, message: '必填项不能为空', trigger: 'blur'}
+  ],
+  url: [
+    {required: true, message: '必填项不能为空', trigger: 'blur'}
+  ]
+});
 
 let fileList = computed(() => {
-  if (dataForm.url != null){
+  if (dataForm.url != null) {
     return [{uid: dataForm.url, name: dataForm.url}]
   }
 })
 
-const props = defineProps({anime:String})
+const props = defineProps({anime: String})
 
 const init = (id?: number) => {
   visible.value = true;
@@ -131,6 +139,7 @@ const handleExceed: UploadProps['onExceed'] = (uploadFiles) => {
   )
 }
 const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
+  dataForm.url = null
   ElMessage({
     type: 'warning',
     message: '已移除文件',
@@ -139,13 +148,14 @@ const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
 const handleSuccess: UploadProps['onSuccess'] = (response, uploadFile, uploadFiles) => {
   console.log(uploadFile)
 }
+
 function upload(param: { file: string | Blob; }) {
   const formData = new FormData()
   formData.append('file', param.file)
   formData.append('animeId', dataForm.animeId)
   formData.append('id', dataForm.id)
   axios.post('anime/animeEpisode/upload', formData, {headers: {'Token': getToken()}}).then((res) => {
-    if (res.data){
+    if (res.data) {
       ElMessage({
         type: 'success',
         message: '文件上传成功'
@@ -161,6 +171,7 @@ function upload(param: { file: string | Blob; }) {
     })
   })
 }
+
 const cleanFiles = () => {
   uploadFile.value.clearFiles()
 }
@@ -170,7 +181,5 @@ defineExpose({
 });
 </script>
 <style>
-.update {
-  padding-left: 120px;
-}
+
 </style>

@@ -10,17 +10,12 @@
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-<!--              <el-table-column prop="id" label="id" header-align="center" align="center"></el-table-column>-->
-<!--              <el-table-column prop="goodId" label="商品id" header-align="center" align="center"></el-table-column>-->
-<!--              <el-table-column prop="userId" label="用户id" header-align="center" align="center"></el-table-column>-->
               <el-table-column prop="goodName" label="商品名称" header-align="center" align="center"></el-table-column>
               <el-table-column prop="userName" label="用户名" header-align="center" align="center"></el-table-column>
               <el-table-column prop="num" label="购买数量" header-align="center" align="center"></el-table-column>
               <el-table-column prop="buyTime" label="购买日期" header-align="center" align="center"></el-table-column>
-<!--              <el-table-column prop="isDelete" label="是否删除" header-align="center" align="center"></el-table-column>-->
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
-          <el-button v-if="state.hasPermission('anime:goodsRecord:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
           <el-button v-if="state.hasPermission('anime:goodsRecord:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>

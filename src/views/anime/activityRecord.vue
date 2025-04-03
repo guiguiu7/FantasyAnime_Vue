@@ -2,19 +2,16 @@
   <div class="mod-anime__activityRecord">
     <el-form :inline="true" :model="state.dataForm" @keyup.enter="state.getDataList()">
       <el-form-item>
-        <el-button v-if="state.hasPermission('anime:activityRecord:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-      </el-form-item>
-      <el-form-item>
         <el-button v-if="state.hasPermission('anime:activityRecord:delete')" type="danger" @click="state.deleteHandle()">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table v-loading="state.dataListLoading" :data="state.dataList" border @selection-change="state.dataListSelectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-              <el-table-column prop="aid" label="活动id" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="uid" label="参加者id" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="aname" label="活动" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="uname" label="参加者" header-align="center" align="center"></el-table-column>
             <el-table-column label="操作" fixed="right" header-align="center" align="center" width="150">
         <template v-slot="scope">
-          <el-button v-if="state.hasPermission('anime:activityRecord:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+<!--          <el-button v-if="state.hasPermission('anime:activityRecord:update')" type="primary" link @click="addOrUpdateHandle(scope.row.id)">修改</el-button>-->
           <el-button v-if="state.hasPermission('anime:activityRecord:delete')" type="primary" link @click="state.deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>

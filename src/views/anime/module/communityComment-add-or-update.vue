@@ -43,7 +43,7 @@ const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '',  articleId: '',  userId: '',  parentId: '',  content: '',  like: '',  commentId: '',  updateTime: '',  createTime: ''});
+  id: '',  articleId: '',  userId: '', userName: '',  parentId: '',  content: '',  like: '',  commentId: '',  updateTime: '',  createTime: ''});
 
 const rules = ref({
           articleId: [

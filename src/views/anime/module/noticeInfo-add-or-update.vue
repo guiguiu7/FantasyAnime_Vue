@@ -2,19 +2,7 @@
   <el-dialog v-model="visible" :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="dataForm" :rules="rules" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
           <el-form-item label="公告信息" prop="info">
-        <el-input v-model="dataForm.info" placeholder="公告信息"></el-input>
-      </el-form-item>
-          <el-form-item label="状态" prop="statu">
-        <el-input v-model="dataForm.statu" placeholder="状态"></el-input>
-      </el-form-item>
-          <el-form-item label="是否删除" prop="isDelete">
-        <el-input v-model="dataForm.isDelete" placeholder="是否删除"></el-input>
-      </el-form-item>
-          <el-form-item label="更新时间" prop="updateTime">
-        <el-input v-model="dataForm.updateTime" placeholder="更新时间"></el-input>
-      </el-form-item>
-          <el-form-item label="创建时间" prop="createTime">
-        <el-input v-model="dataForm.createTime" placeholder="创建时间"></el-input>
+        <el-input v-model="dataForm.info" placeholder="公告信息" type="textarea" :autosize="{minRows: 7}"></el-input>
       </el-form-item>
       </el-form>
     <template #footer>
@@ -34,22 +22,13 @@ const visible = ref(false);
 const dataFormRef = ref();
 
 const dataForm = reactive({
-  id: '',  info: '',  statu: '',  isDelete: '',  updateTime: '',  createTime: ''});
+  id: '',  info: '',  status: '',  isDelete: '',  updateTime: '',  createTime: ''});
 
 const rules = ref({
           info: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          statu: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          isDelete: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          updateTime: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ],
-          createTime: [
+          status: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ]
   });
